@@ -3,6 +3,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: { seperator: ';'},
+      dist: {
+        src: ['public/client/**/*.js'],
+        dest: 'public/dist/<%= pkg.name %>.js'
+      }
     },
 
     mochaTest: {
@@ -21,6 +26,11 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      target: { 
+        files: {
+          'public/dist/<%= pkg.name %>.min.js': ['public/dist/*.js']
+        }
+      }
     },
 
     eslint: {
@@ -83,6 +93,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['concat', 'uglify']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
