@@ -77,7 +77,7 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('build', [ 'server-dev'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [
+  grunt.registerTask('deploy', [ 'build'
       // add your production server task here
   ]);
 
