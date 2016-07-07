@@ -68,6 +68,11 @@ module.exports = function(grunt) {
       prodServer: {
       }
     },
+    githooks: {
+      all: {
+        'pre-push': 'grunt deploy'
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -78,6 +83,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-githooks');
 
   grunt.registerTask('server-dev', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
@@ -100,7 +106,12 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [ 'eslint', 'test', 'build' ]);
+  grunt.registerTask('deploy', function() {
+    if (grunt.option('prod')) {
+      grunt.task.run(['eslint', 'test', 'build']);
+    } else {
+      grunt.task.run(['eslint', 'test', 'build']);
+    }
 
-
+  });
 };
