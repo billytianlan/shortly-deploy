@@ -93,9 +93,9 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-  grunt.registerTask('test', [ 'mochaTest' ]);
+  grunt.registerTask('test', ['mochaTest']);
 
-  grunt.registerTask('build', [ 'concat', 'uglify' ]);
+  grunt.registerTask('build', ['concat', 'uglify']);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
@@ -115,5 +115,5 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('default', [ 'githooks' ]);
+  grunt.registerTask('default', ['githooks']);
 };
