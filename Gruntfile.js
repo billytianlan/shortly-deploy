@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     },
     githooks: {
       all: {
-        'pre-push': ':',
+        'pre-push': '',
         'pre-commit': 'eslint'
       }
     }
