@@ -3,9 +3,9 @@ var express = require('express');
 var expect = require('chai').expect;
 var app = require('../server-config.js');
 
-var db = require('../db/mongoose').db;
-var User = require('../db/mongoose').User;
-var Link = require('../db/mongoose').Link;
+var db = require('../app/mongoose').db;
+var User = require('../app/mongoose').User;
+var Link = require('../app/mongoose').Link;
 
 /////////////////////////////////////////////////////
 // NOTE: these tests are designed for mongo!
@@ -216,11 +216,13 @@ describe('', function() {
         'username': 'Phillip',
         'password': 'Phillip'
       }).save(function() {
+        console.log('about to call done');
         done();
       });
     });
 
     it('Logs in existing users', function(done) {
+      console.log('about to attempt login');
       request(app)
         .post('/login')
         .send({

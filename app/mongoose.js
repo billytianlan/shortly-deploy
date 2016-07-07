@@ -13,6 +13,7 @@ var linkSchema = mongoose.Schema({
 
 linkSchema.pre('save', function(next) {
   var shasum = crypto.createHash('sha1');
+  shasum.update(this.url);
   this.code = shasum.digest('hex').slice(0, 5); 
   next();
 });
@@ -23,10 +24,11 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.pre('save', function(next) {
+  var that = this;
   bcrypt.hash(this.password, null, null, function(err, hash) {
-    this.password = hash;
+    that.password = hash;
     next();
-  })
+  });
 });
 
 var Link = mongoose.model('Link', linkSchema);
