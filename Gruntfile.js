@@ -71,7 +71,7 @@ module.exports = function(grunt) {
     githooks: {
       all: {
         'pre-push': 'deploy --prod',
-        'pre-commit': ''
+        'pre-commit': 'eslint'
       }
     }
   });
