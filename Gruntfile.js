@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     },
     githooks: {
       all: {
-        'pre-push': 'grunt deploy'
+        'pre-commit': 'grunt deploy'
       }
     }
   });
