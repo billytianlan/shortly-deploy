@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/*.js']
+        src: ['test/*.js']
       }
     },
 
@@ -36,7 +36,11 @@ module.exports = function(grunt) {
     eslint: {
       target: [
         // Add list of files to lint here
-      ]
+        './'
+      ],
+      options: {
+        maxWarnings: 1
+      }
     },
 
     cssmin: {
@@ -83,12 +87,9 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-  grunt.registerTask('test', [
-    'mochaTest'
-  ]);
+  grunt.registerTask('test', [ 'mochaTest' ]);
 
-  grunt.registerTask('build', [ 'server-dev'
-  ]);
+  grunt.registerTask('build', [ 'concat', 'uglify' ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
@@ -99,9 +100,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [ 'build'
-      // add your production server task here
-  ]);
+  grunt.registerTask('deploy', [ 'eslint', 'test', 'build' ]);
 
 
 };
