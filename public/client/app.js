@@ -7,7 +7,8 @@ window.Shortly = Backbone.View.extend({
   },
 
   initialize: function() {
-    console.log( 'Shortly is running' );
+    console.log('Watch is correctly minifying');
+    console.log('Shortly is running');
     $('body').append(this.render().el);
 
     this.router = new Shortly.Router({ el: this.$el.find('#container') });

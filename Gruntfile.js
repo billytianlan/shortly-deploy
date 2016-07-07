@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     concat: {
       options: { seperator: ';'},
       dist: {
-        src: ['public/client/**/*.js'],
+        src: ['public/client/*.js'],
         dest: 'public/dist/<%= pkg.name %>.js'
       }
     },
@@ -50,12 +50,11 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: [
-          'public/client/**/*.js',
-          'public/lib/**/*.js',
+          'public/client/*.js',
+          'public/lib/*.js',
         ],
         tasks: [
-          'concat',
-          'uglify'
+          'build'
         ]
       },
       css: {
@@ -86,7 +85,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-githooks');
 
-  grunt.registerTask('server-dev', function (target) {
+  grunt.registerTask('server-start', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
   });
 
@@ -98,23 +97,24 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', ['concat', 'uglify']);
 
-  grunt.registerTask('upload', function(n) {
-    if (grunt.option('prod')) {
-      // add your production server task here
-      grunt.task.run(['concat', 'uglify']);
-    } else {
-      grunt.task.run([ 'server-dev' ]);
-    }
-  });
+  // grunt.registerTask('upload', function(n) {
+  //   if (grunt.option('prod')) {
+  //     // add your production server task here
+  //     grunt.task.run(['concat', 'uglify']);
+  //   } else {
+  //     grunt.task.run([ 'server-dev' ]);
+  //   }
+  // });
 
-  grunt.registerTask('deploy', function() {
-    if (grunt.option('prod')) {
-      grunt.task.run(['eslint', 'test', 'build']);
-    } else {
-      grunt.task.run(['eslint', 'test', 'build']);
-    }
+  // grunt.registerTask('deploy', function() {
+  //   if (grunt.option('prod')) {
+  //     grunt.task.run(['eslint', 'test', 'build']);
+  //   } else {
+  //     grunt.task.run(['eslint', 'test', 'build']);
+  //   }
 
-  });
+  // });
 
-  grunt.registerTask('default', ['githooks']);
+  // grunt.registerTask('default', ['githooks']);
+
 };
