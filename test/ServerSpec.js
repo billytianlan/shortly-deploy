@@ -3,17 +3,15 @@ var express = require('express');
 var expect = require('chai').expect;
 var app = require('../server-config.js');
 
-var db = require('../app/config');
-var User = require('../app/models/user');
-var Link = require('../app/models/link');
+var db = require('../db/mongoose').db;
+var User = require('../db/mongoose').User;
+var Link = require('../db/mongoose').Link;
 
 /////////////////////////////////////////////////////
 // NOTE: these tests are designed for mongo!
 /////////////////////////////////////////////////////
 
-var User = require('../app/models/user');
-var Link = require('../app/models/link');
-('', function() {
+describe('', function() {
 
   beforeEach(function(done) {
     // Log out currently signed in user
@@ -106,29 +104,34 @@ var Link = require('../app/models/link');
       });
 
       it('Returns the same shortened code if attempted to add the same URL twice', function(done) {
-        var firstCode = link.code;
-        request(app)
-          .post('/links')
-          .send({
-            'url': 'http://www.roflzoo.com/'})
-          .expect(200)
-          .expect(function(res) {
-            var secondCode = res.body.code;
-            expect(secondCode).to.equal(firstCode);
-          })
-          .end(done);
+        Link.findOne({url: 'http://www.roflzoo.com/'}, function(err, data) {
+          var firstCode = data.code;
+          request(app)
+            .post('/links')
+            .send({
+              'url': 'http://www.roflzoo.com/'})
+            .expect(200)
+            .expect(function(res) {
+              var secondCode = res.body.code;
+              expect(secondCode).to.equal(firstCode);
+            })
+            .end(done);
+
+        });
       });
 
       it('Shortcode redirects to correct url', function(done) {
-        var sha = link.code;
-        request(app)
-          .get('/' + sha)
-          .expect(302)
-          .expect(function(res) {
-            var redirect = res.headers.location;
-            expect(redirect).to.equal('http://www.roflzoo.com/');
-          })
-          .end(done);
+        Link.findOne({url: 'http://www.roflzoo.com/'}, function(err, data) {
+          console.log(data);
+          request(app)
+            .get('/' + data.code)
+            .expect(302)
+            .expect(function(res) {
+              var redirect = res.headers.location;
+              expect(redirect).to.equal('http://www.roflzoo.com/');
+            })
+            .end(done);
+        });
       });
 
     }); // 'With previously saved urls'
