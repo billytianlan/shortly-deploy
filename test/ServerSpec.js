@@ -122,7 +122,6 @@ describe('', function() {
 
       it('Shortcode redirects to correct url', function(done) {
         Link.findOne({url: 'http://www.roflzoo.com/'}, function(err, data) {
-          console.log(data);
           request(app)
             .get('/' + data.code)
             .expect(302)
