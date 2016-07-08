@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     uglify: {
       target: { 
         files: {
-          'public/dist/<%= pkg.name %>.min.js': ['public/dist/*.js']
+          'public/dist/<%= pkg.name %>.min.js': ['public/dist/shortly-deploy.js']
         }
       }
     },
